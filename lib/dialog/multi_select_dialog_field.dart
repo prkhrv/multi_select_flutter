@@ -384,9 +384,9 @@ class __MultiSelectDialogFieldViewState<V>
           cancelText: widget.cancelText,
           separateSelectedItems: widget.separateSelectedItems,
           onConfirm: (selected) {
-            if (widget.state != null) {
-              widget.state!.didChange(selected);
-            }
+            // if (widget.state != null) {
+            //   widget.state!.didChange(selected);
+            // }
             _selectedItems = selected;
             if (widget.onConfirm != null) widget.onConfirm!(selected);
           },
@@ -397,11 +397,15 @@ class __MultiSelectDialogFieldViewState<V>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.initialValue != null) {
+      _selectedItems=widget.initialValue!;
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         InkWell(
           onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
             _showDialog(context);
           },
           child: Container(
